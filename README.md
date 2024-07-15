@@ -10,3 +10,15 @@ This is a simple HTTP server with will server an `index.html` page inside the `s
     `Make main && ./main` if you are on UNIX machines
     or
     `nmake main && main` if you are on a Windows machine
+
+#### Explanation
+
+First we define three variables
+
+PORT : the port in wich is going to be connected our server
+MAXIMUM_REQUEST_SIZE : is going to be the maximum buffer that we can send over the server, we are asigning here 2kb.
+ROOT : it's the folder in which the server is going to read and then serve the index.html
+
+Sockets are essentially a port for communication between your computer and any service that can connect to that socket. In C they come from the arpa/inet.h library wich contains networking functionalities.
+
+We create a sock_address_internet (sockadd_in) for the serverAddr, clientAddr.
