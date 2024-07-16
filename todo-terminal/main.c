@@ -3,79 +3,57 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define maxItems 100
-#define maxLength 50
-
-typedef struct {
-  char task[maxLength];
-  int completed;
-} todoItem;
-
-typedef struct {
-  todoItem items[maxItems];
-  int count;
-} todoList;
-
-void saveToFile(todoList *list, const char *filename);
-void loadToFile(todoList *list, const char *filename);
-void addItem(todoList *list, const char *task);
-void deleteItem(todoList *list, int index);
+#include "listhandler.h"
 
 int main(void) {
+  todoList todolist;
+  todolist.count = 0;
+
   initscr();
   cbreak();
   noecho();
   keypad(stdscr, TRUE);
+
+  char fileName[] = "tasks.txt";
+  loadFromFile(&todolist, fileName);
+
+  int choice;
+  char newTask[maxLength];
+
+  do {
+    clear();
+    printw("-> Manage your tasks <-\n");
+    printw(".......................\n");
+    for (int i = 0; i < todolist.count; ++i) {
+      printw("%d. [%c] %s\n", i + 1, (todolist.items[i].completed ? 'x' : ' '));
+    }
+    printw("\n\n");
+    printw("1-> Add new tasks. \n");
+    printw("2-> Mark as completed. \n");
+    printw("3-> Delete item. \n");
+    printw("4-> Save and quit. \n");
+    printw("\nEnter your choice pookie: ");
+    refresh();
+
+    switch (choice) {
+      case 1:
+        clear();
+        break;
+      case 2:
+        clear();
+        break;
+      case 3:
+        clear();
+        break;
+      case 4:
+        clear();
+        break;
+
+    }
+  } while (choice != 4);
+
   endwin();
   return 0;
 }
 
-void saveToFile(todoList *list, const char *filename) {
-  FILE *fp = fopen(filename, "w");
-  if (fp != NULL) {
-    for (int i = 0; i < list->count; i++) {
-      fprintf(fp, "%d, %s\n", list->items[i].completed, list->items[i].task);
-    }
-  } else {
-    perror("Error Opening file");
-    return;
-  }
-  fclose(fp);
-}
-
-void loadToFile(todoList *list, const char *filename) {
-  FILE *fp = fopen(filename, "r");
-  if (fp != NULL) {
-    list->count = 0;
-    while (fscanf(fp, "%d, %[^\n]\n", &list->items[list->count].completed, list->items[list->count].task) == 2) {
-      list->count++;
-      if (list->count >= maxItems) {
-        break;
-      }
-    }
-  } else {
-    perror("Error opening file");
-    return;
-  }
-  fclose(fp);
-}
-
-void addItem(todoList *list, const char *task) {
-  if (list->count >= maxItems) {
-    printf("Max capacity of %i, complete some\n", maxItems);
-    return;
-  } else {
-    strcpy(list->items[list->count].task, task);
-    list->count++;
-  }
-}
-
-void deleteItem(todoList *list, int index) {
-  if (index < 0) {
-
-  } else {
-    
-    list->count--;
-  }
-}
 
