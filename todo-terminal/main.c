@@ -15,6 +15,7 @@ int main(void) {
   loadFromFile(&todolist, fileName);
 
   int choice;
+  int chosenIndex;
   char newTask[maxLength];
 
   do {
@@ -48,11 +49,21 @@ int main(void) {
         break;
       case 2:
         clear();
+        printw("Enter the index of item completed: ");
+        refresh();
+        scanw("%d", &chosenIndex);
+        noecho();
+        markCompleted(&todolist, chosenIndex - 1);
         break;
       case 3:
         clear();
+        printw("Enter item index to be deleted: ");
+        refresh();
+        scanw("%d", &chosenIndex);
+        deleteItem(&todolist, chosenIndex - 1);
         break;
       case 4:
+        saveToFile(&todolist, fileName);
         break;
       default:
         printw("Invalid choice\n");
