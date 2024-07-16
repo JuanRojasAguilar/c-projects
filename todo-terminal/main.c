@@ -1,7 +1,4 @@
-#include <stdio.h>
 #include <ncurses.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "listhandler.h"
 
@@ -25,7 +22,7 @@ int main(void) {
     printw("-> Manage your tasks <-\n");
     printw(".......................\n");
     for (int i = 0; i < todolist.count; ++i) {
-      printw("%d. [%c] %s\n", i + 1, (todolist.items[i].completed ? 'x' : ' '));
+      printw("%d. [%c] %s\n", i + 1, (todolist.items[i].completed ? 'x' : ' '), todolist.items[i].task);
     }
     printw("\n\n");
     printw("1-> Add new tasks. \n");
@@ -37,6 +34,7 @@ int main(void) {
 
     echo();
     scanw("%d", &choice);
+    refresh();
 
     switch (choice) {
       case 1:
@@ -55,9 +53,10 @@ int main(void) {
         clear();
         break;
       case 4:
-        clear();
         break;
-
+      default:
+        printw("Invalid choice\n");
+        break;
     }
     refresh();
   } while (choice != 4);

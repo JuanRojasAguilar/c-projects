@@ -40,6 +40,7 @@ void addItem(todoList *list, const char *task) {
     return;
   } else {
     strcpy(list->items[list->count].task, task);
+    list->items[list->count].completed = 0;
     list->count++;
   }
 }
