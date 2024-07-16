@@ -35,9 +35,18 @@ int main(void) {
     printw("\nEnter your choice pookie: ");
     refresh();
 
+    echo();
+    scanw("%d", &choice);
+
     switch (choice) {
       case 1:
         clear();
+        printw("Add new task: ");
+        refresh();
+        echo();
+        getstr(newTask);
+        noecho();
+        addItem(&todolist, newTask);
         break;
       case 2:
         clear();
@@ -50,6 +59,7 @@ int main(void) {
         break;
 
     }
+    refresh();
   } while (choice != 4);
 
   endwin();

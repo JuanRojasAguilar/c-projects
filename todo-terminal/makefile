@@ -1,2 +1,2 @@
-main: main.c 
-	gcc main.c listHandler.c -o main -lncurses -Wall -Wextra -pedantic -std=c17
+main: main.c listHandler.c listHandler.h
+	gcc main.c listHandler.c -o main -lncurses -Wall -Wextra -pedantic -std=c99

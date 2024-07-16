@@ -58,8 +58,16 @@ void deleteItem(todoList *list, int index) {
 }
 
 void markCompleted(todoList *list, int index) {
-  for (int i = 0; i < list->count; ++i) {
-    printf("%d. [%c] %s\n", i + 1, (list->items[1].completed ? 'x' : ' '),
-           list->items[1].task);
+  if (index < 0 || index >= list->count) {
+    perror("Invalid index.\n");
+    return;
+  } else {
+    list->items[index].completed = 1;
+  }
+}
+
+void printList(todoList *list) {
+  for(int i = 0; i < list->count; ++i) {
+    printf("%d. [%c] %s\n", i + 1, (list->items[i].completed ? 'x' : ' '), list->items[i].task);
   }
 }
