@@ -2,12 +2,16 @@
 #include <unistd.h>
 
 #define DELAY 30000
+#define MAX_PLAYER_LENGTH 20
+
+void printPlayer(char *player);
 
 int main() {
   int x, y;
   int max_x, max_y;
   int next_x = 0, next_y = 0;
   int direction = 1;
+  char player[MAX_PLAYER_LENGTH] = {'P'};
   
   int key;
 
@@ -15,7 +19,7 @@ int main() {
   noecho();
   curs_set(FALSE);
   keypad(stdscr, TRUE);
-
+  
   getmaxyx(stdscr, max_y, max_x);
   x = max_x >> 1;
   y = max_y >> 1;
@@ -47,16 +51,32 @@ int main() {
 
     switch(direction) {
       case 1:
-        y = (y > 0) ? y - 1 : y;
+        if ((y - 1) <= 0) {
+          y = max_y;
+        } else {
+          y = y - 1;
+        }
         break;
       case 2:
-        y = (y < max_y - 1) ? y + 1 : y;
+        if ((y + 1) == max_y - 1) {
+          y = 0;
+        } else {
+          y = y + 1;
+        }
         break;
       case 3:
-        x = (x > 0) ? x - 1 : x;
+        if ((x - 1) <= 0) {
+          x = max_x;
+        } else {
+          x = x - 1;
+        }
         break;
       case 4:
-        x = (x < max_x - 1) ? x + 1 : x;
+        if ((x + 1) == max_x - 1) {
+          x = 0;
+        } else {
+          x = x + 1;
+        }
         break;
       default:
         break;
@@ -71,4 +91,5 @@ int main() {
   endwin();
   return 0;
 }
+
 
