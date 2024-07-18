@@ -9,7 +9,6 @@
 
 void change_position(int positions[][2], int player_l, int new_y, int new_x);
 void print_food(int rany, int ranx);
-void eat_food(int position[2], int rany, int ranx, int maxy, int maxx, int *pl);
 
 int main() {
   int x, y, rand_x, rand_y;
@@ -96,8 +95,15 @@ int main() {
         break;
     }
 
-    eat_food(playerPosition[player_length - 1], rand_y, rand_x, max_y, max_x, &player_length);
     // testing sec
+
+    time(&current_time);
+    if (difftime(current_time, start_time) >= 3.0) {
+      rand_x = (rand() % (max_x - 2)) + 1; // testing
+      rand_y = (rand() % (max_y - 2)) + 1; // testing
+      player_length++;
+      time(&start_time);
+    }
 
     clear();
     for (int i = 0; i < player_length; i++) {
@@ -110,17 +116,6 @@ int main() {
 
   endwin();
   return 0;
-}
-
-void eat_food(int position[2], int rany, int ranx, int maxy, int maxx, int *pl) {
-  if (position[0] == rany && position[1] == ranx) {
-      ranx = (rand() % (maxx - 2)) + 1; // testing
-      rany = (rand() % (maxy - 2)) + 1; // testing
-      pl++;
-  } else {
-    return;
-  }
-  print_food(rany, ranx);
 }
 
 void print_food(int rany, int ranx) {
